@@ -1,10 +1,7 @@
 import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
-import com.gargoylesoftware.htmlunit.html.HtmlHeading1;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
-import java.net.URLEncoder;
 import java.util.List;
 
 class Main{
@@ -25,7 +22,13 @@ class Main{
                 for(HtmlElement htmlItem : items){
                     HtmlElement titleElement = ((HtmlElement) htmlItem.getFirstByXPath(".//h1/a[@class='cim']")) ;
 
-                    String title = titleElement == null ? "Nincs cim" : titleElement.asText();
+                    String title;
+                    if(titleElement == null){
+                        HtmlElement leaderTitleElement = ((HtmlElement) htmlItem.getFirstByXPath(".//h1/a")) ;
+                        title = leaderTitleElement.asText();
+                    }else{
+                        title = titleElement.asText();
+                    }
                     System.out.println(title);
                 }
             }
